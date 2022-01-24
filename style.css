@@ -1,21 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Work+Sans&display=swap');
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+#header {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 32px;
+}
+
 #calculator{
     width: 300px;
     height: 400px;
     background-color: gray;
-    border: 5px solid gray;
+    border: 10px solid black;
     border-radius: 20px;
     padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .display{
     background-color: white;
     display: flex;
     justify-content: end;
+    align-items: center;
     border: 5px solid white;
     border-radius: 20px;
-    
+    margin-bottom: 20px;
+    font-size: 24px;
+    height: 50px;
+    padding-right: 20px;
+    font-family: 'Mochiy Pop P One', sans-serif;
+}
+.workings{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    gap: 15px;
+    justify-content: center;
+}
+.number, .operation, .clear {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    font-size: 24px;
+    font-family: 'Work Sans', sans-serif;
+}
+.number{
+    background-color: black ;
+    border-color: black;
+}
+.operation{
+    background-color: orange;
+    border-color: orange;
+}
+.clear {
+    background-color: red;
+    border-color: red;
 }
