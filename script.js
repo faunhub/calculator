@@ -1,67 +1,58 @@
-function add(a,b){
+function add(a, b){
     return a+b;
 }
-
-function subtract(a,b){
+function subtract(a, b){
     return a-b;
 }
-
-function multiply(a,b){
+function multiply(a, b){
     return a*b;
 }
-
-function divide(a,b){
+function divide(a, b){
     return a/b;
 }
-
-function currentNumber(number){
+function operate(a, b, op){
+    if (op == '+'){
+        displayValue = add(a,b);
+    } else if (op == '-'){
+        displayValue = subtract(a,b);
+    } else if (op == '*'){
+        displayValue = multiply(a,b);
+    } else if (op == '÷'){
+        displayValue = divide(a,b);
+    }
+    display.textContent = displayValue;
+}
+function populateDisplay(number){
     if (display.textContent.length >= 14){
         return;
     }
-    display.textContent += number.textContent;
-    currentInt = display.textContent;
-    return display.textContent;
+    return display.textContent+= number.textContent;
 }
-
-function operate(){
-    let a;
-    let b;
-    if (typeof(currentEquation[length-1]) == 'number'){
-        a = currentEquation[0];
-        b = currentEquation[length-1];
-        if (currentEquation[1] == 'add'){
-            currentEquation =[];
-            return add(a,b);
-        }
-    } else {
-        return;
-    }
+function deleteAll(){
+    display.textContent = '';
+    displayValue = 0;
 }
 
 //main
-const allOperation = document.querySelectorAll('.operation');
-const plus = document.querySelector('.add');
-const minus = document.querySelector('.subtract');
-const times = document.querySelector('.multiply');
-const over = document.querySelector('.divide');
-const allNumber = document.querySelectorAll('.number');
+
+const numberCollection = document.querySelectorAll('.number');
+const opCollection = document.querySelectorAll('.operation');
 const display = document.querySelector('.display');
 const clear = document.querySelector('.clear');
-let currentInt =0;
-let currentEquation = [];
-let result =0;
+const equal = document.querySelector('.equal');
+let displayValue;
+let firstValue;
+let currentOp;
 
-allNumber.forEach(number => number.addEventListener('click', () =>{
-    currentNumber(number);
-} ));
-allOperation.forEach(operation => operation.addEventListener('click',
-(operation) => {
-    // result = operate();
-    currentInt =0;
-    display.innerText ="";
-    currentEquation.push(operation.target.classList.item(1));
-    console.log(currentEquation);
-} 
-));
-
-clear.addEventListener('click', () => display.textContent ="");
+numberCollection.forEach(number => number.addEventListener('click', () => {
+    populateDisplay(number);
+    displayValue = display.textContent;
+    console.log(displayValue);
+}));
+opCollection.forEach(operation => operation.addEventListener('click', () => {
+    firstValue = displayValue;
+    currentOp = operation.textContent;
+    deleteAll();
+}));
+clear.addEventListener('click', deleteAll);
+equal.addEventListener('click', () => operate(firstValue, displayValue, currentOp));
