@@ -10,17 +10,30 @@ function multiply(a, b){
 function divide(a, b){
     return a/b;
 }
-function operate(a, b, op){
-    if (op == '+'){
-        displayValue = add(a,b);
-    } else if (op == '-'){
-        displayValue = subtract(a,b);
-    } else if (op == '*'){
-        displayValue = multiply(a,b);
-    } else if (op == '÷'){
-        displayValue = divide(a,b);
+function operate(op){
+    if (answer === undefined ){
+        answer = displayValue;
+        displayValue = undefined;
+        return;
     }
-    display.textContent = displayValue;
+    if (op == '+'){
+        answer = add(answer, displayValue);
+        displayValue = undefined;
+    } else if (op == '-'){
+        answer = subtract(answer, displayValue);
+        displayValue = undefined;
+    } else if (op == '*'){
+        answer = multiply(answer, displayValue);
+        displayValue = undefined;
+    } else if (op == '÷'){
+        if (displayValue ==0){
+             message.textContent = '0 answer found. You can\'t divide by 0!';
+            return;
+        }
+        answer = divide(answer, displayValue);
+        displayValue = undefined;
+    }
+    display.textContent = answer;
 }
 function populateDisplay(number){
     if (display.textContent.length >= 14){
@@ -30,7 +43,9 @@ function populateDisplay(number){
 }
 function deleteAll(){
     display.textContent = '';
-    displayValue = 0;
+    displayValue = undefined;
+    answer =undefined;
+    currentOp=undefined;
 }
 
 //main
@@ -40,19 +55,25 @@ const opCollection = document.querySelectorAll('.operation');
 const display = document.querySelector('.display');
 const clear = document.querySelector('.clear');
 const equal = document.querySelector('.equal');
+const message = document.querySelector('.notification');
 let displayValue;
-let firstValue;
+let answer;
 let currentOp;
 
 numberCollection.forEach(number => number.addEventListener('click', () => {
-    populateDisplay(number);
-    displayValue = display.textContent;
-    console.log(displayValue);
+    displayValue = parseFloat(populateDisplay(number));
+    
 }));
+
+//if you use multiple different operations it doesnt work
 opCollection.forEach(operation => operation.addEventListener('click', () => {
-    firstValue = displayValue;
+    operate(currentOp);
     currentOp = operation.textContent;
-    deleteAll();
+    display.textContent ='';
+    
 }));
 clear.addEventListener('click', deleteAll);
-equal.addEventListener('click', () => operate(firstValue, displayValue, currentOp));
+equal.addEventListener('click', () => {
+    operate(currentOp);
+    displayValue =undefined;
+});
