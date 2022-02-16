@@ -42,6 +42,7 @@ body {
 .number, .operation, .clear, .equal {
     color: white;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     border: 5px solid;
